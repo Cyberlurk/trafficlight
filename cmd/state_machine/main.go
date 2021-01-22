@@ -29,21 +29,22 @@ func run() {
 	interval := time.NewTicker(1000 * time.Millisecond)
 	for !win.Closed() {
 		select {
-			case <-interval.C:
-				// erase canvas
-				win.Clear(colornames.Black)
-				imd.Clear()
+		case <-interval.C:
+			// erase canvas
+			win.Clear(colornames.Black)
+			imd.Clear()
 
-				// draw
-				NorthernTrafficLight.State.NextLight(NorthernTrafficLight)
-				NorthernTrafficLight.State.Draw(NorthernTrafficLight)
-				NorthernTrafficLight.State.CarPassingSpeed(NorthernTrafficLight, 25,"abc 123")
-			default:
+			// have object draw to imd
+			NorthernTrafficLight.State.NextLight(NorthernTrafficLight)
+			NorthernTrafficLight.State.Draw(NorthernTrafficLight)
+			NorthernTrafficLight.State.CarPassingSpeed(NorthernTrafficLight, 25, "abc 123")
+		default:
 		}
 
+		// draw
 		imd.Draw(win)
-
-		// update
+		// fetch new events (key presses, mouse moves and clicks, etc.)
+		// and redraw the window
 		win.Update()
 	}
 }

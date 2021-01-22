@@ -24,8 +24,12 @@ func run() {
 	imd.Precision = 100
 
 	NorthernTrafficLight := trafficlight_oop.NewSimpleTrafficLight(pixel.V(512, 200), imd)
+	NorthernTrafficLight.Light = trafficlight_oop.AMBER
 
 	for !win.Closed() {
+		NorthernTrafficLight.CarPassingSpeed(30, "abc")
+		NorthernTrafficLight.NextLight()
+
 		// erase canvas
 		win.Clear(colornames.Black)
 		imd.Clear()
@@ -34,12 +38,11 @@ func run() {
 		NorthernTrafficLight.Draw()
 		imd.Draw(win)
 
-		NorthernTrafficLight.CarPassingSpeed(30, "abc")
-		time.Sleep(1 * time.Second)
-
-		// update
+		// fetch new events (key presses, mouse moves and clicks, etc.)
+		// and redraw the window
 		win.Update()
-		NorthernTrafficLight.NextLight()
+
+		time.Sleep(1 * time.Second)
 	}
 }
 

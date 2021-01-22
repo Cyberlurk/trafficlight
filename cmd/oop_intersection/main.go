@@ -5,7 +5,6 @@ import (
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
-	"time"
 	"trafficLight/pkg/trafficlight_oop"
 )
 
@@ -29,6 +28,9 @@ func run() {
 	intersection := trafficlight_oop.NewSimpleIntersection(NorthernTrafficLight, EasternTrafficLight)
 
 	for !win.Closed() {
+		// update objects
+		intersection.Step()
+
 		// erase canvas
 		win.Clear(colornames.Black)
 		imd.Clear()
@@ -37,11 +39,10 @@ func run() {
 		intersection.Draw()
 		imd.Draw(win)
 
-		time.Sleep(1 * time.Second)
-
-		// update
+		// fetch new events (key presses, mouse moves and clicks, etc.)
+		// and redraw the window
 		win.Update()
-		intersection.Step()
+
 	}
 }
 
